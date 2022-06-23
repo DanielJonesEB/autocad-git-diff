@@ -8,7 +8,7 @@ FILENAME=$1
 OTHER_REF=$2
 
 function wrap_path () {
-  if which wslpath; then
+  if which wslpath 2>&1> /dev/null; then
     echo "$(wslpath -w "$1")"
   else
     echo "$1"
