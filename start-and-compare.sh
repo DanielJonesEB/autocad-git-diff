@@ -9,7 +9,7 @@ OTHER_REF=$2
 
 function wrap_path () {
   if which wslpath; then
-    echo "$(wslpath -t "$1")"
+    echo "$(wslpath -w "$1")"
   else
     echo "$1"
   fi
