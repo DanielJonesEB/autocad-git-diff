@@ -2,17 +2,26 @@
 
 set -euxo pipefail
 
+: "${AUTOCAD_PATH:?AUTOCAD_PATH env var must be provided, absolute path to the AutoCAD executable}"
+
 FILENAME=$1
 OTHER_REF=$2
 
-OTHER_PATH=$(mktemp).dwg
-echo "$OTHER_PATH"
+function wrap_path () {
+  if which wslpath; then
+    echo "$(wslpath -t "$1")"
+  else
+    echo "$1"
+  fi
+}
+
+OTHER_PATH=$(wrap_path $(mktemp).dwg)
 git show "$OTHER_REF:$FILENAME" > "$OTHER_PATH"
 
-COMPARE_SCRIPT_PATH=$(mktemp).scr
+COMPARE_SCRIPT_PATH=$(wrap_path $(mktemp).scr)
 echo "-COMPARE $OTHER_PATH" > "$COMPARE_SCRIPT_PATH"
 
-"/Applications/Autodesk/AutoCAD 2023/AutoCAD 2023.app/Contents/MacOS/AutoCAD" \
+"$AUTOCAD_PATH" \
   -nologo \
   -b "$COMPARE_SCRIPT_PATH" \
-  "$FILENAME"
+  "$(wrap_path "$FILENAME")"
