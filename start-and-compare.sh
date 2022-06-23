@@ -15,4 +15,4 @@ echo "-COMPARE $OTHER_PATH" > "$COMPARE_SCRIPT_PATH"
 "/Applications/Autodesk/AutoCAD 2023/AutoCAD 2023.app/Contents/MacOS/AutoCAD" \
   -nologo \
   -b "$COMPARE_SCRIPT_PATH" \
-  "/Users/danieljones/workspace/autocad-compare/$FILENAME"
+  "$FILENAME"
