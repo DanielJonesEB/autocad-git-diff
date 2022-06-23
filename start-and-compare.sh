@@ -15,13 +15,13 @@ function wrap_path () {
   fi
 }
 
-OTHER_PATH=$(wrap_path $(mktemp --suffix .dwg))
+OTHER_PATH=$(mktemp --suffix .dwg)
 git show "$OTHER_REF:$FILENAME" > "$OTHER_PATH"
 
-COMPARE_SCRIPT_PATH=$(wrap_path $(mktemp --suffix .scr))
-echo "-COMPARE $OTHER_PATH" > "$COMPARE_SCRIPT_PATH"
+COMPARE_SCRIPT_PATH=$(mktemp --suffix .scr)
+echo "-COMPARE $(wrap_path $OTHER_PATH)" > "$COMPARE_SCRIPT_PATH"
 
 "$AUTOCAD_PATH" \
   -nologo \
-  -b "$COMPARE_SCRIPT_PATH" \
+  -b $(wrap_path "$COMPARE_SCRIPT_PATH") \
   "$(wrap_path "$FILENAME")"
