@@ -3,6 +3,8 @@
 set -euxo pipefail
 
 : "${AUTOCAD_PATH:?AUTOCAD_PATH env var must be provided, absolute path to the AutoCAD executable}"
+: "${1:?First argument must be path of file to compare}"
+: "${2:?Second argument must be Git reference containing file to compare to}"
 
 FILENAME=$1
 OTHER_REF=$2
